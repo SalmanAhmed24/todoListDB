@@ -23,4 +23,7 @@ mongoose
 app.use("/api/users", userRoutes);
 app.use("/api/categories", catRoutes);
 app.use("/api/tasks", taskRoutes);
-app.listen(5000);
+const PORT = 4000;
+app.listen(PORT, () => {
+  console.log(`API listening on PORT ${PORT} `);
+});
