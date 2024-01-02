@@ -95,7 +95,8 @@ const deleteTasks = async (req, res, next) => {
   res.status(201).json({ message: "Deleted successfully", error: true });
 };
 const editTasks = async (req, res, next) => {
-  const { title, date, startTime, endTime, category, description } = req.body;
+  const { title, date, startTime, endTime, category, description, userId } =
+    req.body;
   const { taskId } = req.params;
   let taskToBeEdit;
   try {
@@ -109,6 +110,8 @@ const editTasks = async (req, res, next) => {
   taskToBeEdit.startTime = startTime;
   taskToBeEdit.endTime = endTime;
   taskToBeEdit.description = description;
+  taskToBeEdit.category = category;
+  taskToBeEdit.userId = userId;
   try {
     await taskToBeEdit.save();
   } catch (error) {
@@ -118,7 +121,7 @@ const editTasks = async (req, res, next) => {
     });
     return next(error);
   }
-  res.status(201).json({ message: "Edited successfully", error: true });
+  res.status(201).json({ message: "Edited successfully", error: false });
 };
 const doneTask = async (req, res, next) => {
   const { taskId } = req.params;

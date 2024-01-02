@@ -7,5 +7,6 @@ const router = express.Router();
 // user controllers
 const UserController = require("../controllers/user-controllers");
 router.post("/", UserController.addNewUser);
+router.patch("/resetPassword", UserController.renewPassword);
 router.post("/login", UserController.loginUser);
 module.exports = router;

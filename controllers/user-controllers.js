@@ -57,5 +57,30 @@ const loginUser = async (req, res, next) => {
     });
   }
 };
+const renewPassword = async (req, res, next) => {
+  const { email, password } = req.body;
+  let findUserByEmail;
+  try {
+    findUserByEmail = await userModel.findOne({ email: email });
+  } catch (error) {
+    res.json({ message: "Error occured while searching user", error: true });
+    return next(error);
+  }
+  if (findUserByEmail) {
+    findUserByEmail.password = password;
+    try {
+      findUserByEmail.save();
+      res.json({ message: "Password reset successfully", error: false });
+    } catch (error) {
+      res.json({ message: "Password reset unsuccessfully", error: true });
+    }
+  } else {
+    res.json({
+      message: "No such user exists Please enter correct email",
+      error: true,
+    });
+  }
+};
 exports.addNewUser = addNewUser;
 exports.loginUser = loginUser;
+exports.renewPassword = renewPassword;
